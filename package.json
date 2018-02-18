@@ -1,0 +1,33 @@
+{
+  "name": "3h-daemon",
+  "version": "1.0.0",
+  "description": "A daemon lib.",
+  "main": "js/3h-daemon.js",
+  "scripts": {
+    "test": "node js/cli.js test/test.js -t 3 -e -- -a 0 -b 1"
+  },
+  "types": "ts/3h-daemon.d.ts",
+  "bin": "js/cli.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huang2002/3h-daemon.git"
+  },
+  "keywords": [
+    "3h",
+    "daemon",
+    "guard",
+    "cli"
+  ],
+  "author": "3h",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/huang2002/3h-daemon/issues"
+  },
+  "homepage": "https://github.com/huang2002/3h-daemon#readme",
+  "dependencies": {
+    "3h-log": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.6"
+  }
+}
