@@ -3,13 +3,19 @@ import EventEmitter from "events";
 
 export = class Daemon extends EventEmitter {
 
-    public maxRestartTimes: number = Infinity;
+    public maxRestartTimes = Infinity;
     setMaxRestartTimes(times: number): this {
         this.maxRestartTimes = times;
         return this;
     }
 
-    private _restartCount: number = 0;
+    public restartDelay = 0;
+    setRestartDelay(delay: number): this {
+        this.restartDelay = delay;
+        return this;
+    }
+
+    private _restartCount = 0;
     get restartCount() {
         return this._restartCount;
     }
@@ -30,7 +36,13 @@ export = class Daemon extends EventEmitter {
             end = true;
             if (this._restartCount < this.maxRestartTimes) {
                 this._restartCount++;
-                this.emit('restart', this._process = this.create());
+                if (this.restartDelay > 0) {
+                    setTimeout(() => {
+                        this.emit('restart', this._process = this.create());
+                    }, this.restartDelay);
+                } else {
+                    this.emit('restart', this._process = this.create());
+                }
             }
         };
         const p = spawn(process.argv0, [this.file].concat(this.args), this.options);

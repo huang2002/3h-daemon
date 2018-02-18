@@ -1,10 +1,10 @@
 {
   "name": "3h-daemon",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A daemon lib.",
   "main": "js/3h-daemon.js",
   "scripts": {
-    "test": "node js/cli.js test/test.js -t 3 -e -- -a 0 -b 1"
+    "test": "node js/cli.js test/test.js -t 2 -e -d 500 -- -a 0 -b 1"
   },
   "types": "ts/3h-daemon.d.ts",
   "bin": "js/cli.js",

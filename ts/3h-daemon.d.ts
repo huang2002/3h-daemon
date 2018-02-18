@@ -9,11 +9,13 @@ export default class Daemon extends EventEmitter {
     args: string[];
     options: SpawnOptions;
     maxRestartTimes: number;
+    restartDelay: number;
 
     readonly restartCount: number;
     readonly process: ChildProcess;
 
     setMaxRestartTimes(times: number): this;
+    setRestartDelay(delay: number): this;
     start(): this;
 
     on(event: 'die', listener: (code: number, signal: string) => void): this;

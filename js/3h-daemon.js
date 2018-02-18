@@ -11,6 +11,7 @@ module.exports = class Daemon extends events_1.default {
         this.args = args;
         this.options = options;
         this.maxRestartTimes = Infinity;
+        this.restartDelay = 0;
         this._restartCount = 0;
         this.create = () => {
             let end = false;
@@ -23,7 +24,14 @@ module.exports = class Daemon extends events_1.default {
                 end = true;
                 if (this._restartCount < this.maxRestartTimes) {
                     this._restartCount++;
-                    this.emit('restart', this._process = this.create());
+                    if (this.restartDelay > 0) {
+                        setTimeout(() => {
+                            this.emit('restart', this._process = this.create());
+                        }, this.restartDelay);
+                    }
+                    else {
+                        this.emit('restart', this._process = this.create());
+                    }
                 }
             };
             const p = child_process_1.spawn(process.argv0, [this.file].concat(this.args), this.options);
@@ -35,6 +43,10 @@ module.exports = class Daemon extends events_1.default {
     }
     setMaxRestartTimes(times) {
         this.maxRestartTimes = times;
+        return this;
+    }
+    setRestartDelay(delay) {
+        this.restartDelay = delay;
         return this;
     }
     get restartCount() {

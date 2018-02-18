@@ -12,6 +12,7 @@ Usage:
 Options:
     -h          Show this.
     -t <times>  Set max restart times.
+    -d <delay>  Set restart delay.
     -i          No stdin.
     -o          No stdout.
     -e          No stderr.
@@ -36,7 +37,7 @@ daemon.on('die', (code, signal) => {
     console.log(`Died! ( Code:${code} Signal:${signal} )`);
 }).on('restart', process => {
     console.log(`Restart! ( pid:${process.pid} )`);
-}).setMaxRestartTimes(10).start();
+}).setMaxRestartTimes(10).setRestartDelay(1000).start();
 ```
 
 ### API
@@ -44,10 +45,12 @@ daemon.on('die', (code, signal) => {
     - process: child_process.ChildProcess - *The current process of that file.*
     - restartCount: number - *How many times has the file been restarted.*
     - maxRestartTimes: number - *Max restart times.*
+    - restartDelay: number - *The delay before restarting.*
     - file: string - *The name of the file to guard.*
     - args: string[] - *The arguments for it.*
     - options: child_process.SpawnOptions - *Options for `child_process.spawn`.*
     - setMaxRestartTimes(times: number): this - *Set `maxRestartTimes` to times.*
+    - setRestartDelay(delay: number): this - *Set `restartDelay` to delay.*
     - start(): this - *Start guarding.*
     - on(event: 'die', listener: (code: number, signal: string) => void): this - *Emitted when that process exits.*
     - on(event: 'restart', listener: (process: child_process.ChildProcess) => void): this - *Emitted when that process restarts.*

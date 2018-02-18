@@ -36,6 +36,7 @@ if (cmdArgMap.has('h')) {
         'Options:\n' +
         '    -h          Show this.\n' +
         '    -t <times>  Set max restart times.\n' +
+        '    -d <delay>  Set restart delay.\n' +
         '    -i          No stdin.\n' +
         '    -o          No stdout.\n' +
         '    -e          No stderr.\n'
@@ -53,6 +54,9 @@ if (cmdArgMap.has('h')) {
         });
         if (cmdArgMap.has('t')) {
             daemon.setMaxRestartTimes(Number.parseInt(cmdArgMap.get('t') as string));
+        }
+        if (cmdArgMap.has('d')) {
+            daemon.setRestartDelay(Number.parseInt(cmdArgMap.get('d') as string));
         }
         daemon.on('die', (code, signal) => {
             logger.write('Die', `code: ${code} signal: ${signal}`);
