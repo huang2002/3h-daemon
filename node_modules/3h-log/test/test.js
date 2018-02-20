@@ -12,3 +12,6 @@ logger.error('error with my prefix');
 const d = 2;
 logger.preLen += d;
 logger.trace('trace with ' + d + ' more spaces');
+logger.preLen -= d;
+
+logger.write('ABC', 'custom');

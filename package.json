@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/huang2002/3h-daemon#readme",
   "dependencies": {
-    "3h-log": "^2.0.1"
+    "3h-log": "^2.0.2"
   },
   "devDependencies": {
     "@types/node": "^9.4.6"
