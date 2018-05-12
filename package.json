@@ -1,6 +1,6 @@
 {
   "name": "3h-daemon",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A daemon lib.",
   "main": "js/3h-daemon.js",
   "scripts": {

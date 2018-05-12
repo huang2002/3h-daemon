@@ -1,7 +1,7 @@
 import { spawn, ChildProcess, SpawnOptions } from 'child_process';
 import EventEmitter from "events";
 
-export default class Daemon extends EventEmitter {
+declare class Daemon extends EventEmitter {
 
     constructor(file: string, args?: string[], options?: SpawnOptions);
 
@@ -22,3 +22,5 @@ export default class Daemon extends EventEmitter {
     on(event: 'restart', listener: (process: ChildProcess) => void): this;
 
 }
+
+export = Daemon;
