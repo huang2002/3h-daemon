@@ -1,12 +1,13 @@
 import EventEmitter = require('events');
-import { spawn, SpawnOptions, ChildProcess } from 'child_process';
+import { spawn, exec, ExecOptions, SpawnOptions, ChildProcess } from 'child_process';
 
 interface DaemonOptions {
     command?: string;
     args?: string[];
-    options?: SpawnOptions;
+    options?: SpawnOptions | ExecOptions;
     maxRestartTimes?: number;
     restartDelay?: number;
+    exec?: boolean;
 }
 
 interface Daemon {
@@ -31,9 +32,10 @@ class Daemon extends EventEmitter implements DaemonOptions {
 
     command = '';
     args: string[] = [];
-    options: SpawnOptions = {};
+    options: SpawnOptions | ExecOptions = {};
     maxRestartTimes = Infinity;
     restartDelay = 0;
+    exec = false;
 
     private _restartTimes = 0;
     get restartTimes() {
@@ -51,7 +53,13 @@ class Daemon extends EventEmitter implements DaemonOptions {
     }
 
     private _start() {
-        const childProcess = this._childProcess = spawn(this.command, this.args, this.options);
+        let childProcess: ChildProcess;
+        if (this.exec) {
+            childProcess = exec(this.command + this.args.join(' '), this.options as ExecOptions);
+        } else {
+            childProcess = spawn(this.command, this.args, this.options as SpawnOptions);
+        }
+        this._childProcess = childProcess;
         childProcess.on('exit', (code, signal) => {
             if (childProcess === this._childProcess) {
                 this.emit('exit', code, signal);

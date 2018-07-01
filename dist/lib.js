@@ -9,6 +9,7 @@ class Daemon extends EventEmitter {
         this.options = {};
         this.maxRestartTimes = Infinity;
         this.restartDelay = 0;
+        this.exec = false;
         this._restartTimes = 0;
         this._active = false;
         Object.assign(this, options);
@@ -23,7 +24,14 @@ class Daemon extends EventEmitter {
         return this._active;
     }
     _start() {
-        const childProcess = this._childProcess = child_process_1.spawn(this.command, this.args, this.options);
+        let childProcess;
+        if (this.exec) {
+            childProcess = child_process_1.exec(this.command + this.args.join(' '), this.options);
+        }
+        else {
+            childProcess = child_process_1.spawn(this.command, this.args, this.options);
+        }
+        this._childProcess = childProcess;
         childProcess.on('exit', (code, signal) => {
             if (childProcess === this._childProcess) {
                 this.emit('exit', code, signal);

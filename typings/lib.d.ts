@@ -1,12 +1,13 @@
 /// <reference types="node" />
 import EventEmitter = require('events');
-import { SpawnOptions, ChildProcess } from 'child_process';
+import { ExecOptions, SpawnOptions, ChildProcess } from 'child_process';
 interface DaemonOptions {
     command?: string;
     args?: string[];
-    options?: SpawnOptions;
+    options?: SpawnOptions | ExecOptions;
     maxRestartTimes?: number;
     restartDelay?: number;
+    exec?: boolean;
 }
 interface Daemon {
     emit(event: 'start', childProcess: ChildProcess): boolean;
@@ -24,9 +25,10 @@ declare class Daemon extends EventEmitter implements DaemonOptions {
     constructor(options?: DaemonOptions);
     command: string;
     args: string[];
-    options: SpawnOptions;
+    options: SpawnOptions | ExecOptions;
     maxRestartTimes: number;
     restartDelay: number;
+    exec: boolean;
     private _restartTimes;
     readonly restartTimes: number;
     private _childProcess?;

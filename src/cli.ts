@@ -21,6 +21,11 @@ const cli: CLI = CLI.create({
     alias: ['-help'],
     help: 'Show help info.'
 }).arg({
+    name: 'e',
+    alias: ['-exec'],
+    help: 'Use `child_process.exec` instead\n' +
+        'of `child_process.spawn`.'
+}).arg({
     name: 'a',
     alias: ['-args'],
     val: 'args...',
@@ -63,7 +68,7 @@ const cli: CLI = CLI.create({
     }
 
     const daemon = new Daemon({
-        command: args.has('commands') ? (args.get('command') as string[])[0] : 'node',
+        command: args.has('commands') ? (args.get('command') as string[]).join(' ') : 'node',
         args: args.get('a'),
         options: {
             stdio: [
@@ -71,7 +76,8 @@ const cli: CLI = CLI.create({
                 noIOFlag(args.has('-no-stdout')),
                 noIOFlag(args.has('-no-stderr'))
             ]
-        }
+        },
+        exec: args.has('e')
     });
 
     if (args.has('m')) {
@@ -99,7 +105,7 @@ const cli: CLI = CLI.create({
         }).on('exit', (code, signal) => {
             logger.info(`Child process exit! (code: ${code} signal: ${signal})`);
         }).on('error', err => {
-            logger.error('An error occurred in the child process!');
+            logger.error('An error occurred!');
             console.log(err);
         });
 

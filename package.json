@@ -1,10 +1,11 @@
 {
     "name": "3h-daemon",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "A daemon lib.",
     "main": "dist/lib.js",
     "scripts": {
-        "test": "node dist/cli.js -a test/test.js -m 3 -d 75",
+        "test:spawn": "node dist/cli.js -a test/test.js -m 3 -d 75",
+        "test:exec": "node dist/cli.js -a test/test.js -e -m 3 -d 75",
         "test:help": "node dist/cli.js -h",
         "prebuild": "del /Q dist\\*.* typings\\*.*",
         "build": "tsc",
