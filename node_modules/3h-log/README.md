@@ -1,45 +1,32 @@
 # 3h-log
 
-> A lib that helps you log things with various prefix easily.
+A logger lib.
 
-## Install
+# Features
 
-```
-$ npm install 3h-log
-```
+- Log with formatted time stamps (using `3h-time`)
+- Log with various prefixes
+- Log level control
 
-## Example
+# Example
 
 ```javascript
-const Logger = require('3h-log');
 
-const logger = new Logger();
+const Logger = require('3h-log'),
+    logger = new Logger({ timeFormat: '[YYYY-MM-DD HH:MM:SS.sss]' });
 
-logger.warn('A warning with default prefix.');
+logger.print('custom', 'Custom messages.');
 
-logger.prefix.warn = 'MyWarn';
-logger.warn('A warning with my prefix.');
+logger.setLevel('log');
 
-logger.showTime = false;
-logger.error('An error without time.');
+logger.error('Some errors.');
+logger.warn('Some warnings.');
+logger.info('Some infomation.');
+logger.log('Some logs.');
+logger.debug('This should not be seen!');
 
-logger.preLen += 2;
-logger.info('A piece of information with 2 more spaces.');
 ```
 
-## API
+# APIs
 
-- Logger(out?: stream.Writable) - *The constructor of loggers.*
-- logger - ( Any instance of `Logger`. )
-    - preLen: number - *Target length of prefixes.*
-    - showTime: boolean - *Whether to show the current time.*
-    - prefix - *The prefixes.*
-        - info: string - *The prefix for `logger.info`.*
-        - error: string - *The prefix for `logger.error`.*
-        - warn: string - *The prefix for `logger.warn`.*
-        - trace: string - *The prefix for `logger.trace`.*
-    - write(prefix: string, msg: string) - *To write something.*
-    - info(msg: string) - *To log some information.*
-    - error(msg: string) - *To log some errors.*
-    - warn(msg: string) - *To log some warnings.*
-    - trace(msg: string) - *To log some traces.*
+Just read the type declaration files in [`typings`](typings) to learn the APIs.

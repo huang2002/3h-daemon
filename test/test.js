@@ -1,7 +1,10 @@
-const id = process.pid;
-console.log(`${id}->start with args: ${JSON.stringify(process.argv.slice(2))}`);
-if (Math.random() >= .5) {
-    console.log(`${id}->err`);
-    throw new Error('End...');
+switch (Date.now() % 3) {
+    case 0:
+        console.log('I will throw an error.');
+        throw 'An error just for test.';
+    case 1:
+        console.log('I will exit 1.');
+        process.exit(1);
 }
-console.log(`${id}->end`);
+
+console.log('I will exit 0.');
