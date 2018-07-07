@@ -1,6 +1,6 @@
 {
     "name": "3h-daemon",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "A daemon lib.",
     "main": "dist/lib.js",
     "scripts": {
@@ -31,10 +31,10 @@
     },
     "homepage": "https://github.com/huang2002/3h-daemon#readme",
     "dependencies": {
-        "3h-cli": "^1.4.4",
+        "3h-cli": "^1.5.0",
         "3h-log": "^3.0.1"
     },
     "devDependencies": {
-        "@types/node": "^10.5.1"
+        "@types/node": "^10.5.2"
     }
 }
