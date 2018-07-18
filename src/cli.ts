@@ -1,4 +1,4 @@
-#! node
+#!/usr/bin/env node
 import Daemon = require('./lib');
 import CLI = require('3h-cli');
 import Logger = require('3h-log');
